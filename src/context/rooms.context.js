@@ -12,6 +12,9 @@ export const RoomsProvider = ({ children }) => {
 
     roomListRef.on('value', snap => {
       const data = transformToArrWithId(snap.val());
+      console.log(snap.val());
+      console.log(data);
+
       setRooms(data);
     });
 
@@ -25,4 +28,6 @@ export const RoomsProvider = ({ children }) => {
   );
 };
 
-export const useRooms = () => useContext(RoomsContext);
+export const useRooms = () => {
+  return useContext(RoomsContext);
+};
