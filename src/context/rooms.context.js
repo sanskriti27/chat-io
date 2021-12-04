@@ -12,9 +12,6 @@ export const RoomsProvider = ({ children }) => {
 
     roomListRef.on('value', snap => {
       const data = transformToArrWithId(snap.val());
-      console.log(snap.val());
-      console.log(data);
-
       setRooms(data);
     });
 
