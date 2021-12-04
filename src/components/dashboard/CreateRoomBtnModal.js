@@ -85,12 +85,12 @@ const CreateRoomBtnModal = () => {
               <FormControl name="name" placeholder="Enter chat room name..." />
             </FormGroup>
             <FormGroup>
-              <ControlLabel>Discription</ControlLabel>
+              <ControlLabel>Description</ControlLabel>
               <FormControl
                 componentClass="textarea"
                 rows={5}
-                name="discription"
-                placeholder="Enter room discription..."
+                name="description"
+                placeholder="Enter room description..."
               />
             </FormGroup>
           </Form>
