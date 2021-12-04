@@ -9,7 +9,7 @@ const RoomItem = ({ room }) => {
       <div className="d-flex justify-content-between align-items-center">
         <h3 className="text-disappear">{name}</h3>
         <TimeAgo
-          datetime={lastMessage ? new Date(lastMessage) : new Date(createdAt)}
+          datetime={lastMessage ? new Date(createdAt) : new Date(createdAt)}
           className="font-normal text-black-45"
         />
       </div>
