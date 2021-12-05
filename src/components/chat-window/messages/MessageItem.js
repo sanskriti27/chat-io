@@ -7,10 +7,27 @@ import { auth } from '../../../misc/firebase';
 import Presence from '../../Presence';
 import ProfileAvatar from '../../ProfileAvatar';
 import IconBtnControl from './IconBtnControl';
+import ImgBtnModal from './ImgBtnModal';
 import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 
+const renderFileMessage = file => {
+  if (file.contentType.includes('image')) {
+    return (
+      <div className="h-220">
+        <ImgBtnModal src={file.url} fileName={file.name} />
+      </div>
+    );
+  }
+
+  return (
+    <a target="_blank" href={file.url} rel="noreferrer">
+      Download {file.name}
+    </a>
+  );
+};
+
 const MessageItem = ({ msg, handleAdmin, handleLike, handleDelete }) => {
-  const { author, createdAt, text, likes, likeCount } = msg;
+  const { author, createdAt, text, file, likes, likeCount } = msg;
 
   const [selfRef, isHovered] = useHover();
 
@@ -78,7 +95,8 @@ const MessageItem = ({ msg, handleAdmin, handleLike, handleDelete }) => {
         )}
       </div>
       <div>
-        <span className="word-break-all">{text}</span>
+        {text && <span className="word-break-all">{text}</span>}
+        {file && renderFileMessage(file)}
       </div>
     </li>
   );
