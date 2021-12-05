@@ -12,8 +12,7 @@ const Messages = () => {
 
   useEffect(() => {
     const messagesRef = database.ref('/messages');
-    console.log(messagesRef);
-    console.log(messagesRef);
+
     messagesRef
       .orderByChild('roomId')
       .equalTo(chatId)

@@ -5,7 +5,6 @@ import ProfileAvatar from '../../ProfileAvatar';
 import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 
 const MessageItem = ({ msg }) => {
-  console.log(msg);
   const { author, createdAt, text } = msg;
   return (
     <li className="padded mb-1 mr-1">
