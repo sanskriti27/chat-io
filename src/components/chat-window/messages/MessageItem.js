@@ -2,13 +2,19 @@ import React, { memo } from 'react';
 import { Button } from 'rsuite';
 import TimeAgo from 'timeago-react';
 import { useCurrentRoom } from '../../../context/current-room.context';
+import { useHover, useMediaQuery } from '../../../misc/custom-hooks';
 import { auth } from '../../../misc/firebase';
 import Presence from '../../Presence';
 import ProfileAvatar from '../../ProfileAvatar';
+import IconBtnControl from './IconBtnControl';
 import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 
-const MessageItem = ({ msg, handleAdmin }) => {
-  const { author, createdAt, text } = msg;
+const MessageItem = ({ msg, handleAdmin, handleLike, handleDelete }) => {
+  const { author, createdAt, text, likes, likeCount } = msg;
+
+  const [selfRef, isHovered] = useHover();
+
+  const isMobile = useMediaQuery('(max-width: 992px)');
 
   const isAdmin = useCurrentRoom(v => v.isAdmin);
   const admins = useCurrentRoom(v => v.admins);
@@ -18,8 +24,16 @@ const MessageItem = ({ msg, handleAdmin }) => {
 
   const canGrantAdmin = isAdmin && !isAuthor;
 
+  const canShowIcons = isHovered || isMobile;
+  const isLiked = likes && Object.keys(likes).includes(auth.currentUser.uid);
+
   return (
-    <li className="padded mb-1 mr-1">
+    <li
+      className={`padded mb-1 mr-1 cursor-pointer ${
+        isHovered ? 'bg-black-02' : ''
+      }`}
+      ref={selfRef}
+    >
       <div className="d-flex align-items-center font-bolder mb-1">
         <Presence uid={author.uid} />
 
@@ -45,6 +59,23 @@ const MessageItem = ({ msg, handleAdmin }) => {
           datetime={createdAt}
           className="font-normal text-black-45 ml-2"
         />
+        <IconBtnControl
+          {...(isLiked ? { color: 'red' } : {})}
+          isVisible={canShowIcons}
+          iconName="heart"
+          onClick={() => handleLike(msg.id)}
+          badgeContent={likeCount}
+          tooltip="Like"
+        />
+
+        {isAuthor && (
+          <IconBtnControl
+            isVisible={canShowIcons}
+            iconName="close"
+            onClick={() => handleDelete(msg.id)}
+            tooltip="delete"
+          />
+        )}
       </div>
       <div>
         <span className="word-break-all">{text}</span>
