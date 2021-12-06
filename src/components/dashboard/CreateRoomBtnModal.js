@@ -38,7 +38,9 @@ const CreateRoomBtnModal = () => {
   }, []);
 
   const onSubmit = async () => {
-    if (!formRef.current.check()) {
+    console.log(formRef.current);
+
+    if (formRef.current.check()) {
       return;
     }
 
